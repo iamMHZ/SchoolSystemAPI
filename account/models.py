@@ -18,6 +18,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    # TODO add the national id field instead of username
     school_name = models.CharField(max_length=255, null=True)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
