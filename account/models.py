@@ -4,13 +4,16 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class UserManager(BaseUserManager):
 
-    def create_teacher(self):
+    def create_user(self, username, password, **kwargs):
+        pass
+
+    def create_teacher(self, username, password, school_name, **kwargs):
         pass
 
     def create_student(self):
         pass
 
-    def create_superuser(self):
+    def create_superuser(self, username, password, **kwargs):
         pass
 
 
