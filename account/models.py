@@ -13,8 +13,10 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_teacher(self, username, password, school_name, **kwargs):
+    def create_teacher(self, username, password, **kwargs):
+        """Creates a teacher"""
         pass
+
 
     def create_student(self, username, password, **kwargs):
         """Creates a student"""
@@ -28,14 +30,14 @@ class UserManager(BaseUserManager):
     def create_superuser(self, username, password, **kwargs):
         """Creates a superuser """
 
-        superuser = self.create_user(username, password, **kwargs)
+        user = self.create_user(username, password, **kwargs)
 
-        superuser.is_superuser = True
-        superuser.is_staff = True
+        user.is_superuser = True
+        user.is_staff = True
 
-        superuser.save(using=self._db)
+        user.save(using=self._db)
 
-        return superuser
+        return user
 
 
 class User(AbstractUser):
