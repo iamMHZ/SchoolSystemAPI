@@ -35,7 +35,7 @@ class CustomUserTests(TestCase):
         self.assertTrue(superuser.is_superuser)
         self.assertTrue(superuser.is_staff)
 
-    def test_create_student(self):
+    def test_create_student_success(self):
         """Test creating s student user is successful"""
 
         student = get_user_model().objects.create_student(
@@ -48,3 +48,17 @@ class CustomUserTests(TestCase):
         self.assertFalse(student.is_superuser)
         self.assertFalse(student.is_staff)
         self.assertFalse(student.is_teacher)
+
+    def test_create_teacher_success(self):
+        """Test creating a teacher is successful"""
+
+        teacher = get_user_model().objects.create_teacher(
+            username='teacher_test',
+            password='12345'
+        )
+
+        self.assertTrue(teacher.is_teacher)
+        self.assertTrue(teacher.is_active)
+        self.assertFalse(teacher.is_superuser)
+        self.assertFalse(teacher.is_staff)
+        self.assertFalse(teacher.is_student)
