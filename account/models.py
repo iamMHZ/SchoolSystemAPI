@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
     def create_user(self, username, password, **kwargs):
         user = self.model(username=username, **kwargs)
         user.set_password(password)
-        user.save(self._db)
+        user.save(using=self._db)
 
         return user
 
@@ -20,8 +20,11 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username, password, **kwargs):
         superuser = self.create_user(username, password, **kwargs)
+
         superuser.is_superuser = True
         superuser.is_staff = True
+
+        superuser.save(using=self._db)
 
         return superuser
 
