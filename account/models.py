@@ -34,12 +34,10 @@ class User(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
 
-    # USERNAME_FIELD = 'national id'
-    # REQUIRED_FIELDS = []
+    # USERNAME_FIELD = 'username'
+    # REQUIRED_FIELDS = ['password']
 
     objects = UserManager()
-
-
 
     def __str__(self):
         return self.username
