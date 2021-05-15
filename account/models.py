@@ -36,7 +36,7 @@ class User(AbstractUser):
     """A user model that supports students and teacher flags and has the national id field"""
 
     # TODO add the national id field instead of username
-    school_name = models.CharField(max_length=255, null=True)
+    school_name = models.CharField(max_length=255, blank=True)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
 
