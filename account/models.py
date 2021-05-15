@@ -6,6 +6,7 @@ class UserManager(BaseUserManager):
     """Manger for creating user objects"""
 
     def create_user(self, username, password, **kwargs):
+        """Create a simple active user with no permissions"""
         user = self.model(username=username, **kwargs)
         user.set_password(password)
         user.save(using=self._db)
@@ -19,6 +20,8 @@ class UserManager(BaseUserManager):
         pass
 
     def create_superuser(self, username, password, **kwargs):
+        """Create superuser """
+
         superuser = self.create_user(username, password, **kwargs)
 
         superuser.is_superuser = True
