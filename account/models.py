@@ -16,8 +16,14 @@ class UserManager(BaseUserManager):
     def create_teacher(self, username, password, school_name, **kwargs):
         pass
 
-    def create_student(self):
-        pass
+    def create_student(self, username, password, **kwargs):
+        """Creates a student"""
+
+        user = self.create_user(username, password, **kwargs)
+        user.is_student = True
+        user.save(using=self._db)
+
+        return user
 
     def create_superuser(self, username, password, **kwargs):
         """Create a superuser """
