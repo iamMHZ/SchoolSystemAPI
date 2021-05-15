@@ -34,3 +34,17 @@ class CustomUserTests(TestCase):
 
         self.assertTrue(superuser.is_superuser)
         self.assertTrue(superuser.is_staff)
+
+    def test_create_student(self):
+        """Test creating s student user is successful"""
+
+        student = get_user_model().objects.create_student(
+            username='student',
+            password='12345'
+        )
+
+        self.assertTrue(student.is_student)
+        self.assertTrue(student.is_active)
+        self.assertFalse(student.is_superuser)
+        self.assertFalse(student.is_staff)
+        self.assertFalse(student.is_teacher)
