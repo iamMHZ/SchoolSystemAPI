@@ -7,12 +7,21 @@ from django.contrib.auth.admin import gettext
 from .models import User
 
 
+# Another way of customizing django admin page
+
+# class CustomUserAdmin(UserAdmin):
+#     add_form = CustomUserCreationForm
+#     form = CustomUserChangeForm
+#     model =  User
+#     list_display = ['email', 'username',]
+
+
 class CustomUserAdmin(UserAdmin):
     """Customize the admin page """
     # https://docs.djangoproject.com/en/3.2/topics/auth/customizing/
 
     ordering = ['id']
-    list_display = ['username', 'school_name']
+    list_display = ['username', ]
 
     # use for editing a user
     fieldsets = (
