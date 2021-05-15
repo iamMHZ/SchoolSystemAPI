@@ -15,8 +15,11 @@ class UserManager(BaseUserManager):
 
     def create_teacher(self, username, password, **kwargs):
         """Creates a teacher"""
-        pass
+        user = self.create_user(username, password, **kwargs)
+        user.is_teacher = True
+        user.save(using=self._db)
 
+        return user
 
     def create_student(self, username, password, **kwargs):
         """Creates a student"""
