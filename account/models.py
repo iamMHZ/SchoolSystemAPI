@@ -1,12 +1,16 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
 
 
 class UserManager(BaseUserManager):
     """Manger for creating user objects"""
 
     def create_user(self, username, password, **kwargs):
-        pass
+        user = self.model(username=username, **kwargs)
+        user.set_password(password)
+        user.save(self._db)
+
+        return user
 
     def create_teacher(self, username, password, school_name, **kwargs):
         pass
@@ -15,7 +19,11 @@ class UserManager(BaseUserManager):
         pass
 
     def create_superuser(self, username, password, **kwargs):
-        pass
+        superuser = self.create_user(username, password, **kwargs)
+        superuser.is_superuser = True
+        superuser.is_staff = True
+
+        return superuser
 
 
 class User(AbstractUser):
@@ -26,14 +34,12 @@ class User(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
 
-    is_active = False
-    is_staff = False
-    is_superuser = False
-
     # USERNAME_FIELD = 'national id'
     # REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+
 
     def __str__(self):
         return self.username
