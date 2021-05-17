@@ -59,3 +59,21 @@ class PublicAccountApiTests(APITestCase):
 
         response = self.client.get(LIST_ACCOUNTS_URL)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class PrivateAccountApiTests(APITestCase):
+    """Tests that need authentications for accessing accounts endpoints"""
+
+    def setUp(self):
+        # create a superuser
+        self.user = get_user_model().objects.create_superuser(username='test',
+                                                              password='password')
+        self.client = APIClient()
+        self.client.force_login(self.user)
+
+    def test_listing_users_success(self):
+        """Test listing users as an logedin superuser is successful"""
+
+        response = self.client.get(LIST_ACCOUNTS_URL)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
