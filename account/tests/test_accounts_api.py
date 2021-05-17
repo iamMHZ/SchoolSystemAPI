@@ -39,7 +39,7 @@ class PublicAccountTest(APITestCase):
         self.assertFalse(simple_user.is_student)
 
     def test_create_superusers(self):
-        """Test that creating a superuser with an unauthenticated user fails"""
+        """Test that creating a superuser with an unauthenticated user"""
 
         data = {
             'username': 'superuser',
