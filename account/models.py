@@ -5,6 +5,7 @@ from django.db import models
 class UserManager(BaseUserManager):
     """Manger for creating user objects"""
 
+    # TODO lots of code duplication stay DRY
     def create_user(self, username, password, **kwargs):
         """Creates a simple active user with no permissions"""
         user = self.model(username=username, **kwargs)
