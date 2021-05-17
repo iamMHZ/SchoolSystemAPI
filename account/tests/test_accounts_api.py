@@ -10,7 +10,7 @@ CREATE_ACCOUNT_URL = reverse('create-account')
 LIST_ACCOUNTS_URL = reverse('list-accounts')
 
 
-class PublicAccountTest(APITestCase):
+class PublicAccountApiTests(APITestCase):
     """Test for account endpoints that do not need permissions or authentications """
 
     def setUp(self):
