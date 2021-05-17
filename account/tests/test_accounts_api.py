@@ -53,3 +53,9 @@ class PublicAccountTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertFalse(simple_user.is_superuser)
+
+    def test_list_users_needs_authentication(self):
+        """Test that listing users needs authentication"""
+
+        response = self.client.get(LIST_ACCOUNTS_URL)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
