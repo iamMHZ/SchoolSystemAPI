@@ -38,6 +38,18 @@ class PublicAccountTest(APITestCase):
         self.assertFalse(simple_user.is_teacher)
         self.assertFalse(simple_user.is_student)
 
-    def test_create_superuser(self):
+    def test_create_superusers(self):
         """Test that creating a superuser with an unauthenticated user fails"""
 
+        data = {
+            'username': 'superuser',
+            'password': 'passwordsuper',
+            'is_superuser': True
+        }
+
+        response = self.client.post(CREATE_ACCOUNT_URL, data)
+
+        simple_user = get_user_model().objects.get(username=data['username'])
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertFalse(simple_user.is_superuser)
