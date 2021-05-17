@@ -4,7 +4,7 @@ from .views import UserCreateView, UserListView
 
 urlpatterns = [
 
-    path('create-account', UserCreateView.as_view()),
-    path('list-account', UserListView.as_view()),
+    path('create-account', UserCreateView.as_view(), name='create-account'),
+    path('list-account', UserListView.as_view(), name='list-accounts'),
 
 ]
