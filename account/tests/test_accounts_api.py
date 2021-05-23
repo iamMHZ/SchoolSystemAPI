@@ -6,8 +6,8 @@ from rest_framework.test import APITestCase
 
 from account.serializers import SimpleUserSerializer
 
-CREATE_ACCOUNT_URL = reverse('create-account')
-LIST_ACCOUNTS_URL = reverse('list-accounts')
+CREATE_ACCOUNT_URL = reverse('account:create-account')
+LIST_ACCOUNTS_URL = reverse('account:list-accounts')
 
 
 class PublicAccountApiTests(APITestCase):
