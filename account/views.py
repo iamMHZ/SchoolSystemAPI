@@ -39,3 +39,13 @@ class CreateStudentView(CreateAPIView):
         self.request.user.students.create(**serializer.data)
 
 
+class ListStudentView(ListAPIView):
+    """List the registered students for authenticated user"""
+
+    # TODO add the permissions
+    # permission_classes =
+
+    serializer_class = SimpleUserSerializer
+
+    def get_queryset(self):
+        return self.request.user.students.all()
