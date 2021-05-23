@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
 from school.models import News
-from school.serializers import NewsSerializer
+from school.serializers import NewsSerializer, NewsDetailedSerializer
 
 NEWS_URL = reverse('school:news-list')
 
@@ -30,7 +30,10 @@ class PrivateNewsApiTests(APITestCase):
         self.client = APIClient()
         self.teacher = get_user_model().objects.create_teacher(
             username='testTeacher',
-            password='testpassword'
+            password='testpassword',
+            first_name='test name',
+            last_name='test last name',
+            school_name='test school name'
         )
 
         self.client.force_login(self.teacher)
@@ -76,3 +79,25 @@ class PrivateNewsApiTests(APITestCase):
         response = self.client.post(NEWS_URL, data)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieve_new_detail(self):
+        """Test retrieving a single news with all of its details"""
+
+        # Create a news
+        data = {
+            'teacher': self.teacher.id,
+            'title': 'test title',
+            'body': 'test body'
+        }
+        self.client.post(NEWS_URL, data)
+
+        # get the news from the api
+        url = reverse('school:news-detail', args=[1, ])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Get the data from the database
+        news = News.objects.get(**data)
+        serializer = NewsDetailedSerializer(news)
+
+        self.assertEqual(serializer.data, response.data)
