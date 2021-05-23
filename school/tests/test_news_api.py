@@ -6,7 +6,7 @@ from rest_framework.test import APITestCase, APIClient
 from school.models import News
 from school.serializers import NewsSerializer
 
-NEWS_URL = reverse('news-list')
+NEWS_URL = reverse('school:news-list')
 
 
 class PublicNewsApiTest(APITestCase):
@@ -56,9 +56,23 @@ class PrivateNewsApiTests(APITestCase):
 
     def test_create_news_success(self):
         data = {
-            'teacher': self.teacher,
+            'teacher': self.teacher.id,
             'title': 'test title',
             'body': 'teat body'
         }
 
-        pass
+        response = self.client.post(NEWS_URL, data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        exits = News.objects.filter(**data).exists()
+        self.assertTrue(exits)
+
+    def test_create_news_with_invalid_data(self):
+        """"Test creating a news with invalid data"""
+
+        data = {'title': 'wrong payload should fail'}
+
+        response = self.client.post(NEWS_URL, data)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

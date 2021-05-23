@@ -6,4 +6,4 @@ from school import models
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.News
-        fields = '__all__'
+        fields = ('teacher', 'title', 'body',)
