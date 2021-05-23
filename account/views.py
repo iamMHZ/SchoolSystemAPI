@@ -23,3 +23,19 @@ class UserListView(ListAPIView):
 
     serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
+
+
+class CreateStudentView(CreateAPIView):
+    """View for creating a new student"""
+
+    # TODO add the permission that a teacher can add a student
+    # permission_classes =
+
+    serializer_class = SimpleUserSerializer
+
+    def perform_create(self, serializer):
+        # if self.request.user.is_teacher:
+
+        self.request.user.students.create(**serializer.data)
+
+
