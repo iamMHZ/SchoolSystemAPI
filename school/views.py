@@ -17,3 +17,9 @@ class NewsViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Save the news for the authenticated user"""
         serializer.save(teacher=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializers.NewsDetailedSerializer
+
+        return self.serializer_class
