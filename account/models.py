@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
@@ -56,6 +57,9 @@ class User(AbstractUser):
     # REQUIRED_FIELDS = ['password']
 
     objects = UserManager()
+
+    # Each teacher has many students
+    students = models.ManyToManyField(to=settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.username
