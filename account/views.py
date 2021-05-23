@@ -6,6 +6,8 @@ from account.serializers import UserSerializer, SimpleUserSerializer
 
 
 class UserCreateView(CreateAPIView):
+    """Create a new user base on the requested user"""
+
     serializer_class = UserSerializer
 
     def get_serializer_class(self):
@@ -16,6 +18,7 @@ class UserCreateView(CreateAPIView):
 
 
 class UserListView(ListAPIView):
+    """List all the users in the database"""
     permission_classes = [IsAdminUser]
 
     serializer_class = UserSerializer

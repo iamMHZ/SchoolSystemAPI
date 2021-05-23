@@ -6,6 +6,8 @@ from school import serializers
 
 
 class NewsViewSet(viewsets.ModelViewSet):
+    """ViewSet for the news"""
+
     queryset = models.News.objects.all()
     serializer_class = serializers.NewsSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -19,6 +21,7 @@ class NewsViewSet(viewsets.ModelViewSet):
         serializer.save(teacher=self.request.user)
 
     def get_serializer_class(self):
+        """Change the serializer based on the action"""
         if self.action == 'retrieve':
             return serializers.NewsDetailedSerializer
 
