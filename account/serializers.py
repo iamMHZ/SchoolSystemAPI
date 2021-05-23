@@ -11,9 +11,10 @@ class UserSerializer(ModelSerializer):
 
 
 class SimpleUserSerializer(ModelSerializer):
-    """A serializer with for creating a simple user only """
+    """A serializer with for creating a simple user only (just active no permissions) """
 
     class Meta:
         model = get_user_model()
-        fields = ('username', 'password',)
-        write_only_fields = ('username', 'password',)
+        fields = ('first_name', 'last_name', 'username', 'password',)
+
+# class Teacher
