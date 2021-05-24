@@ -80,7 +80,23 @@ class PrivateAccountApiTests(APITestCase):
 
     def test_creating_students_success(self):
         """Test creating students is successful"""
-        pass
+
+        data = {
+            'first_name': 'test first',
+            'last_name': 'test last',
+            'username': 'test_student',
+            'password': 'test passs',
+            'is_student': True
+        }
+
+        url = reverse('account:add-student')
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        exists = get_user_model().objects.filter(username=data['username']).exists()
+
+        self.assertTrue(exists)
 
     def test_listing_students_success(self):
         """Test listing students is successful"""
