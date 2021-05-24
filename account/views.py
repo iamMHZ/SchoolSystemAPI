@@ -36,7 +36,9 @@ class CreateStudentView(CreateAPIView):
     def perform_create(self, serializer):
         # if self.request.user.is_teacher:
 
-        self.request.user.students.create(**serializer.data)
+        student = get_user_model().objects.create_student(**serializer.data)
+
+        self.request.user.students.add(student)
 
 
 class ListStudentView(ListAPIView):
