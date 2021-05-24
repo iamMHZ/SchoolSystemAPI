@@ -101,3 +101,6 @@ class PrivateNewsApiTests(APITestCase):
         serializer = NewsDetailedSerializer(news)
 
         self.assertEqual(serializer.data, response.data)
+
+
+# TODO test listing news
