@@ -100,4 +100,20 @@ class PrivateAccountApiTests(APITestCase):
 
     def test_listing_students_success(self):
         """Test listing students is successful"""
-        pass
+
+        data = {
+            'first_name': 'test first',
+            'last_name': 'test last',
+            'username': 'test_student',
+            'password': 'test passs',
+            'is_student': True
+        }
+
+        url = reverse('account:add-student')
+        self.client.post(url, data)
+
+        url = reverse('account:list-my-student')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
