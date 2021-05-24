@@ -31,7 +31,7 @@ class NewsViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
 
-class RetrieveNewsView(ListAPIView):
+class ListNewsView(ListAPIView):
     """View for a student to retrieve their teachers news"""
 
     serializer_class = serializers.NewsSerializer
@@ -41,7 +41,6 @@ class RetrieveNewsView(ListAPIView):
 
         # Retrieve the news for the student
         teachers_of_student = get_user_model().objects.filter(students=student).all()
-
         news = models.News.objects.filter(teacher__id__in=teachers_of_student).all()
 
         return news
