@@ -27,7 +27,7 @@ class UserListView(ListAPIView):
 
 class CreateStudentView(CreateAPIView):
     """View for creating a new student"""
-
+    # TODO auto fill is_studnet
     # TODO add the permission that a teacher can add a student
     # permission_classes =
 
