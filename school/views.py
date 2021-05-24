@@ -1,12 +1,14 @@
+from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework.generics import ListAPIView
 
 from school import models
 from school import serializers
 
 
 class NewsViewSet(viewsets.ModelViewSet):
-    """ViewSet for the news"""
+    """ViewSet for the news that teachers can can list retrieve, create ... their news """
 
     queryset = models.News.objects.all()
     serializer_class = serializers.NewsSerializer
@@ -27,3 +29,19 @@ class NewsViewSet(viewsets.ModelViewSet):
             return serializers.NewsDetailedSerializer
 
         return self.serializer_class
+
+
+class RetrieveNewsView(ListAPIView):
+    """View for a student to retrieve their teachers news"""
+
+    serializer_class = serializers.NewsSerializer
+
+    def get_queryset(self):
+        student = self.request.user
+
+        # Retrieve the news for the student
+        teachers_of_student = get_user_model().objects.filter(students=student).all()
+
+        news = models.News.objects.filter(teacher__id__in=teachers_of_student).all()
+
+        return news
