@@ -10,6 +10,7 @@ class NewsViewSet(viewsets.ModelViewSet):
 
     queryset = models.News.objects.all()
     serializer_class = serializers.NewsSerializer
+    # TODO add the teacher only permission
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
