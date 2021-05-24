@@ -18,7 +18,10 @@ class SimpleUserSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('first_name', 'last_name', 'username', 'password', 'is_student')
-        extra_kwargs = {'password': {'write_only': True}}
+        # TODO if write only then the CreateStudentView doesnt get the password
+        # TODO if not write only then the raw password can be seen
+        # TODO to be or not to be
+        # extra_kwargs = {'password': {'write_only': True}}
 
 
 class TeacherDetailSerializer(ModelSerializer):
