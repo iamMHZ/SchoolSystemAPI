@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 
 # TODO  DRY
 
-class UserSerializer(ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """Serializer with full access for all parameters of the custom model"""
 
     class Meta:
@@ -12,7 +12,7 @@ class UserSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class StudentSerializer(ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
     """serializer with for creating a student """
 
     class Meta:
@@ -27,13 +27,30 @@ class StudentSerializer(ModelSerializer):
         """Create a student and then add the student to the current user"""
         student = get_user_model().objects.create_student(**validated_data)
         self.context['request'].user.students.add(student)
-
+        # TODO add an endpoint for creating students without needs of a teacher being logged in
         return student
 
 
-class TeacherDetailSerializer(ModelSerializer):
+class TeacherDetailSerializer(serializers.ModelSerializer):
     """detailed teacher serializer"""
 
     class Meta:
         model = get_user_model()
         fields = ('first_name', 'last_name', 'school_name')
+
+
+class AddStudentSerializer(serializers.Serializer):
+    """Serializer that enabels the curent user 'add' a student to its students  """
+
+    username = serializers.CharField(max_length=150)
+
+    def create(self, validated_data):
+        # lock up the user and determine that it actually exits
+        student = get_user_model().objects.get(username=validated_data.get('username'))
+
+        if student:
+            self.context['request'].user.students.add(student)
+            return validated_data.get('username')
+
+        else:
+            return 'student has not registered yet '
