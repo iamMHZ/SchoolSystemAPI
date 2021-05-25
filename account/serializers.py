@@ -13,7 +13,7 @@ class UserSerializer(ModelSerializer):
 
 
 class StudentSerializer(ModelSerializer):
-    """serializer with for creating a simple user only (just active no permissions) """
+    """serializer with for creating a student """
 
     class Meta:
         model = get_user_model()

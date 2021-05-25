@@ -25,7 +25,7 @@ class CustomUserAdmin(UserAdmin):
         (gettext('Important dates'), {'fields': ('last_login', 'date_joined',)})
     )
 
-    # 'user for creating user'
+    # use for creating user
     add_fieldsets = (
 
         (None, {
