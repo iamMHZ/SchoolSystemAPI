@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
-from account.serializers import SimpleUserSerializer
+from account.serializers import StudentSerializer
 
 CREATE_ACCOUNT_URL = reverse('account:create-account')
 LIST_ACCOUNTS_URL = reverse('account:list-accounts')
@@ -27,7 +27,7 @@ class PublicAccountApiTests(APITestCase):
         response = self.client.post(CREATE_ACCOUNT_URL, data)
 
         simple_user = get_user_model().objects.get(username=data['username'])
-        serializer = SimpleUserSerializer(simple_user)
+        serializer = StudentSerializer(simple_user)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, serializer.data)

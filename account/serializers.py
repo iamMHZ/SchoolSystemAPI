@@ -12,7 +12,7 @@ class UserSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class SimpleUserSerializer(ModelSerializer):
+class StudentSerializer(ModelSerializer):
     """serializer with for creating a simple user only (just active no permissions) """
 
     class Meta:
@@ -22,6 +22,11 @@ class SimpleUserSerializer(ModelSerializer):
         # TODO if not write only then the raw password can be seen
         # TODO to be or not to be
         # extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        """Create a student and then add the student to the current user"""
+        student = get_user_model().objects.create_student(**validated_data)
+        self.context['request'].user.students.add(student)
 
 
 class TeacherDetailSerializer(ModelSerializer):
