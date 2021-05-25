@@ -78,7 +78,7 @@ class PrivateAccountApiTests(APITestCase):
             'is_student': True
         }
 
-        url = reverse('account:add-student')
+        url = reverse('account:create-student')
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -98,7 +98,7 @@ class PrivateAccountApiTests(APITestCase):
             'is_student': True
         }
 
-        url = reverse('account:add-student')
+        url = reverse('account:create-student')
         self.client.post(url, data)
 
         url = reverse('account:list-my-student')
