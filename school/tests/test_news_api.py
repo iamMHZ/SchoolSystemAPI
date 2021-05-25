@@ -102,6 +102,34 @@ class PrivateNewsApiTests(APITestCase):
 
         self.assertEqual(serializer.data, response.data)
 
+    def test_listing_news_with_empty_result(self):
+        """Test listing new for the user with no news"""
 
+        url = reverse('school:list-my-news')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
+
+    def test_listing_new_with_user_having_news(self):
+        """Test listing news with non empty results"""
+
+        # add another user and make the current user as his student
+        another_user = get_user_model().objects.create_teacher('test', 'test')
+        another_user.students.add(self.teacher)
+        # create news with another teacher
+        news_data = {
+            'teacher': another_user,
+            'title': 'test title',
+            'body': 'teat body'
+        }
+        News.objects.create(**news_data)
+
+        # call the api endpoint
+        url = reverse('school:list-my-news')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
 # TODO test listing news
