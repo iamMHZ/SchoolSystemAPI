@@ -28,6 +28,8 @@ class StudentSerializer(ModelSerializer):
         student = get_user_model().objects.create_student(**validated_data)
         self.context['request'].user.students.add(student)
 
+        return student
+
 
 class TeacherDetailSerializer(ModelSerializer):
     """detailed teacher serializer"""

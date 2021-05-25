@@ -4,8 +4,6 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
-from account.serializers import StudentSerializer
-
 CREATE_ACCOUNT_URL = reverse('account:create-account')
 LIST_ACCOUNTS_URL = reverse('account:list-accounts')
 
@@ -16,30 +14,8 @@ class PublicAccountApiTests(APITestCase):
     def setUp(self):
         self.client = APIClient()
 
-    def test_create_simple_user_success(self):
-        """Test that an unauthenticated user can only create a simple active use with no special privilege"""
-
-        data = {
-            'username': 'testuser',
-            'password': 'testpass',
-        }
-
-        response = self.client.post(CREATE_ACCOUNT_URL, data)
-
-        simple_user = get_user_model().objects.get(username=data['username'])
-        serializer = StudentSerializer(simple_user)
-
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data, serializer.data)
-
-        self.assertTrue(simple_user.is_active)
-        self.assertFalse(simple_user.is_superuser)
-        self.assertFalse(simple_user.is_staff)
-        self.assertFalse(simple_user.is_teacher)
-        self.assertFalse(simple_user.is_student)
-
-    def test_create_superusers(self):
-        """Test that creating a superuser with an unauthenticated user"""
+    def test_create_superuser_needs_authentication(self):
+        """Test that creating superuser needs authentication"""
 
         data = {
             'username': 'superuser',
@@ -49,10 +25,7 @@ class PublicAccountApiTests(APITestCase):
 
         response = self.client.post(CREATE_ACCOUNT_URL, data)
 
-        simple_user = get_user_model().objects.get(username=data['username'])
-
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertFalse(simple_user.is_superuser)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_list_users_needs_authentication(self):
         """Test that listing users needs authentication"""
@@ -70,6 +43,22 @@ class PrivateAccountApiTests(APITestCase):
                                                               password='password')
         self.client = APIClient()
         self.client.force_login(self.user)
+
+    def test_create_superusers(self):
+        """Test that creating a superuser with an unauthenticated user"""
+
+        data = {
+            'username': 'superuser',
+            'password': 'passwordsuper',
+            'is_superuser': True
+        }
+
+        response = self.client.post(CREATE_ACCOUNT_URL, data)
+
+        simple_user = get_user_model().objects.get(username=data['username'])
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertFalse(simple_user.is_superuser)
 
     def test_listing_users_success(self):
         """Test listing users as an logedin superuser is successful"""
