@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser
 
-from account.serializers import StudentSerializer, UserSerializer
+from account.serializers import StudentSerializer, UserSerializer, AddStudentSerializer
 
 
 class UserCreateView(CreateAPIView):
@@ -29,7 +29,9 @@ class CreateStudentView(CreateAPIView):
 
 
 class AddStudentView(CreateAPIView):
-    pass
+    """View for adding an existing student to the list of the teachers students"""
+    # TODO add permission
+    serializer_class = AddStudentSerializer
 
 
 class ListStudentView(ListAPIView):
