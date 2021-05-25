@@ -7,8 +7,6 @@ class News(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField(max_length=600)
 
-    # students = models.ManyToManyField(to=settings.AUTH_USER_MODEL)
-
     def __str__(self):
         return str(self.title)
 
