@@ -39,6 +39,7 @@ class TeacherDetailSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'school_name')
 
 
+# TODO BUG  'str' object has no attribute 'username'
 class AddStudentSerializer(serializers.Serializer):
     """Serializer that enabels the curent user 'add' a student to its students  """
 
@@ -49,6 +50,7 @@ class AddStudentSerializer(serializers.Serializer):
         student = get_user_model().objects.get(username=validated_data.get('username'))
 
         if student:
+            # TODO what to do with the already added students
             self.context['request'].user.students.add(student)
             return validated_data.get('username')
 
