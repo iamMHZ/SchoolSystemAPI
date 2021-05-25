@@ -59,7 +59,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     # Each teacher has many students
-    students = models.ManyToManyField(to=settings.AUTH_USER_MODEL)
+    students = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True)
 
     def __str__(self):
         return self.username
