@@ -6,7 +6,7 @@ from rest_framework.test import APITestCase, APIClient
 from school.models import News
 from school.serializers import NewsSerializer, NewsDetailedSerializer
 
-NEWS_URL = reverse('school:news-list')
+NEWS_VIEWSET_LIST_URL = reverse('school:news-list')
 
 
 class PublicNewsApiTest(APITestCase):
@@ -18,7 +18,7 @@ class PublicNewsApiTest(APITestCase):
     def test_news_needs_authentication(self):
         """Test that news api needs authentication"""
 
-        response = self.client.get(NEWS_URL)
+        response = self.client.get(NEWS_VIEWSET_LIST_URL)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -49,7 +49,7 @@ class PrivateNewsApiTests(APITestCase):
                             title='test title 2 ',
                             body='test body 2 ')
 
-        response = self.client.get(NEWS_URL)
+        response = self.client.get(NEWS_VIEWSET_LIST_URL)
 
         news = News.objects.all()
         serializer = NewsSerializer(news, many=True)
@@ -64,7 +64,7 @@ class PrivateNewsApiTests(APITestCase):
             'body': 'teat body'
         }
 
-        response = self.client.post(NEWS_URL, data)
+        response = self.client.post(NEWS_VIEWSET_LIST_URL, data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -76,7 +76,7 @@ class PrivateNewsApiTests(APITestCase):
 
         data = {'title': 'wrong payload should fail'}
 
-        response = self.client.post(NEWS_URL, data)
+        response = self.client.post(NEWS_VIEWSET_LIST_URL, data)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -89,7 +89,7 @@ class PrivateNewsApiTests(APITestCase):
             'title': 'test title',
             'body': 'test body'
         }
-        self.client.post(NEWS_URL, data)
+        self.client.post(NEWS_VIEWSET_LIST_URL, data)
 
         # get the news from the api
         url = reverse('school:news-detail', args=[1, ])
@@ -101,6 +101,7 @@ class PrivateNewsApiTests(APITestCase):
         serializer = NewsDetailedSerializer(news)
 
         self.assertEqual(serializer.data, response.data)
+
 
 
 # TODO test listing news
