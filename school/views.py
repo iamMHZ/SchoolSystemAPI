@@ -39,8 +39,8 @@ class ListNewsView(ListAPIView):
     serializer_class = serializers.NewsSerializer
 
     def get_queryset(self):
+        """Get news only for the logged in student(user)"""
         student = self.request.user
-
         # Retrieve the news for the student
         teachers_of_student = get_user_model().objects.filter(students=student).all()
         news = models.News.objects.filter(teacher__id__in=teachers_of_student).all()
