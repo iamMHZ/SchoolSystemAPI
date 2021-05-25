@@ -34,6 +34,8 @@ class NewsViewSet(viewsets.ModelViewSet):
 class ListNewsView(ListAPIView):
     """View for a student to retrieve their teachers news"""
 
+    # TODO add permission
+
     serializer_class = serializers.NewsSerializer
 
     def get_queryset(self):
