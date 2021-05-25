@@ -55,10 +55,10 @@ class PrivateAccountApiTests(APITestCase):
 
         response = self.client.post(CREATE_ACCOUNT_URL, data)
 
-        simple_user = get_user_model().objects.get(username=data['username'])
+        superuser = get_user_model().objects.get(username=data['username'])
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertFalse(simple_user.is_superuser)
+        self.assertTrue(superuser.is_superuser)
 
     def test_listing_users_success(self):
         """Test listing users as an logedin superuser is successful"""
