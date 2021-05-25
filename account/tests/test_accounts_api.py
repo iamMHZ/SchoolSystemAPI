@@ -106,3 +106,5 @@ class PrivateAccountApiTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+# TODO TEST adding existing students
