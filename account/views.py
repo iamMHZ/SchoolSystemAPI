@@ -28,6 +28,10 @@ class CreateStudentView(CreateAPIView):
     serializer_class = StudentSerializer
 
 
+class AddStudentView(CreateAPIView):
+    pass
+
+
 class ListStudentView(ListAPIView):
     """List the registered students for authenticated user"""
 
