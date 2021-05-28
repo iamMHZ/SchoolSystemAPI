@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 
@@ -47,12 +48,13 @@ class AddStudentSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         # lock up the user and determine that it actually exits
-        student = get_user_model().objects.get(username=validated_data.get('username'))
+        # student = get_user_model().objects.get(username=validated_data.get('username'))
+        student = get_object_or_404(get_user_model(), username=validated_data.get('username'))
 
         if student:
             # TODO what to do with the already added students
             self.context['request'].user.students.add(student)
-            return validated_data.get('username')
+            return validated_data
 
         else:
-            return 'student has not registered yet '
+            return ValueError('student has not registered yet ')
