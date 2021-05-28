@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 
@@ -40,7 +39,6 @@ class TeacherDetailSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'school_name')
 
 
-# TODO BUG  'str' object has no attribute 'username'
 class AddStudentSerializer(serializers.Serializer):
     """Serializer that enabels the curent user 'add' a student to its students  """
 
@@ -48,8 +46,7 @@ class AddStudentSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         # lock up the user and determine that it actually exits
-        # student = get_user_model().objects.get(username=validated_data.get('username'))
-        student = get_object_or_404(get_user_model(), username=validated_data.get('username'))
+        student = get_user_model().objects.get(username=validated_data.get('username'))
 
         if student:
             # TODO what to do with the already added students
