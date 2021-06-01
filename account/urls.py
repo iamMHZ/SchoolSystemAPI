@@ -6,6 +6,7 @@ app_name = 'account'
 
 urlpatterns = [
 
+    # TODO two scope of django says: url "names" have underline instead of dashes
     path('create-account', UserCreateView.as_view(), name='create-account'),
     path('list-account', UserListView.as_view(), name='list-accounts'),
 
