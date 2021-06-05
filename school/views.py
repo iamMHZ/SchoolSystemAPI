@@ -50,8 +50,14 @@ class ListNewsView(ListAPIView):
 
 class AssignmentsViewSet(viewsets.ModelViewSet):
     """ViewSet for teacher that enables them to manipulate their assignments"""
-
     queryset = models.Assignment.objects.all()
     serializer_class = serializers.AssignmentSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
 
-    # TODO make it teacher specific
+    def get_queryset(self):
+        """Only return the news for the current logged in user"""
+        return models.Assignment.objects.filter(teacher=self.request.user)
+
+    def perform_create(self, serializer):
+        """Save the assignment only for the current loged in user"""
+        serializer.save(teacher=self.request.user)
