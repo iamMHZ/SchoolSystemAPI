@@ -46,3 +46,12 @@ class ListNewsView(ListAPIView):
         news = models.News.objects.filter(teacher__id__in=teachers_of_student).all()
 
         return news
+
+
+class AssignmentsViewSet(viewsets.ModelViewSet):
+    """ViewSet for teacher that enables them to manipulate their assignments"""
+
+    queryset = models.Assignment.objects.all()
+    serializer_class = serializers.AssignmentSerializer
+
+    # TODO make it teacher specific
