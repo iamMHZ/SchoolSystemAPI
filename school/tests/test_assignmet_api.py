@@ -17,3 +17,10 @@ class PublicAssignmentApiTest(APITestCase):
         response = self.client.get(ASSIGNMENT_VIEWSET_URL)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class PrivateAssignmentApiTest(APITestCase):
+    """Tests for the assignmets api that need authentication"""
+    # TODO add tests for listing creating and retrieving
+
+    pass
