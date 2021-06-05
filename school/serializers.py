@@ -15,3 +15,11 @@ class NewsSerializer(serializers.ModelSerializer):
 class NewsDetailedSerializer(NewsSerializer):
     """Serializer for the news with detailed teacher data"""
     teacher = TeacherDetailSerializer()
+
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    """Serializer for the Assignments"""
+
+    class Meta:
+        model = models.Assignment
+        fields = ('teacher', 'title', 'body',)
