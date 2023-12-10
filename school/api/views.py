@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.generics import ListAPIView
 
 from school import models
-from school import serializers
+from school.api import serializers
 
 
 class NewsViewSet(viewsets.ModelViewSet):

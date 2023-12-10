@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from account.serializers import TeacherDetailSerializer
+from account.api.serializers import TeacherDetailSerializer
 from school import models
 
 

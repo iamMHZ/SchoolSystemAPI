@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
 from school.models import News
-from school.serializers import NewsSerializer, NewsDetailedSerializer
+from school.api.serializers import NewsSerializer, NewsDetailedSerializer
 
 NEWS_VIEWSET_LIST_URL = reverse('school:news-list')
 

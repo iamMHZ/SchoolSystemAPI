@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from school.views import NewsViewSet, ListNewsView, AssignmentsViewSet
+from school.api.views import NewsViewSet, ListNewsView, AssignmentsViewSet
 
 app_name = 'school'
 
